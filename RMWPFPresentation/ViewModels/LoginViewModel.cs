@@ -1,4 +1,7 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Threading.Tasks;
+using Caliburn.Micro;
+using RMWPFPresentation.Helpers;
 
 namespace RMWPFPresentation.ViewModels
 {
@@ -6,6 +9,12 @@ namespace RMWPFPresentation.ViewModels
     {
         private string _password;
         private string _userName;
+        private readonly IAPIHelper _apiHelper;
+
+        public LoginViewModel(IAPIHelper apiHelper)
+        {
+            _apiHelper = apiHelper;
+        }
 
         public bool CanLogIn => UserName?.Length > 0 && Password?.Length > 0;
 
@@ -31,8 +40,18 @@ namespace RMWPFPresentation.ViewModels
             }
         }
 
-        public void LogIn()
+        public async Task LogIn()
         {
+
+            try
+            {
+                var result = await _apiHelper.Authenticate(UserName, Password);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+               
+            }
         }
     }
 }

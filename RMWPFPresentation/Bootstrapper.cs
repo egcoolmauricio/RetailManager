@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
+using RMWPFPresentation.Helpers;
 using RMWPFPresentation.ViewModels;
 
 namespace RMWPFPresentation
@@ -23,7 +24,8 @@ namespace RMWPFPresentation
             _container.Instance(_container);
             _container
                 .Singleton<IWindowManager, WindowManager>()
-                .Singleton<IEventAggregator, EventAggregator>();
+                .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<IAPIHelper, APIHelper>();
 
             //It will return a new instance per each request
             GetType().Assembly.GetTypes()
