@@ -42,16 +42,34 @@ namespace RMWPFPresentation.ViewModels
 
         public async Task LogIn()
         {
-
             try
             {
+                ErrorMessage = string.Empty;
                 var result = await _apiHelper.Authenticate(UserName, Password);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-               
+                ErrorMessage= e.Message;
             }
         }
+
+
+       
+
+        private string _errorMessage;
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                _errorMessage = value;
+                NotifyOfPropertyChange(nameof(ErrorMessage));
+                NotifyOfPropertyChange(nameof(IsErrorVisible));
+            }
+        }
+
+        public bool IsErrorVisible => ErrorMessage?.Length > 0;
+
     }
 }
